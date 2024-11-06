@@ -25,11 +25,18 @@ Character loadCharacterStats() {
     int health = int.parse(stats[0]);
     int attack = int.parse(stats[1]);
     int defense = int.parse(stats[2]);
-    print("캐릭터의 이름을 입력하세요: ");
-    String name = stdin.readLineSync()!;
-    RegExp(r'^[a-zA-Z가-힣]+$').allMatches(name).isEmpty
-        ? {print("Invalid Name, Exit Game."), exit(1)}
-        : "";
+    String name;
+    while (true) {
+      print("캐릭터의 이름을 입력하세요: ");
+      name = stdin.readLineSync()!;
+      bool nameConvention = RegExp(r'^[a-zA-Z가-힣]+$').allMatches(name).isEmpty;
+      if (nameConvention) {
+        print("Invalid Name, retry");
+        continue;
+      } else {
+        break;
+      }
+    }
     return Character(name, health, attack, defense);
   } catch (e) {
     print('캐릭터 데이터를 불러오는 데 실패했습니다: $e');

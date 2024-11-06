@@ -54,7 +54,7 @@ class Game {
           "," +
           (defeatedMonsters == totalMonsters ? "WIN" : "LOSE");
       File file = File('Assets/result.txt');
-      file.writeAsStringSync(gameResult);
+      file.writeAsStringSync("${gameResult}\n", mode: FileMode.append);
     } else {
       print("게임을 종료합니다.");
     }
