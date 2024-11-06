@@ -12,7 +12,11 @@ class Character {
 
   void attackMonster(Monster monster, int damage) {
     // ADVANCED FEATURE - monster DP is subtracted from the damage
-    monster.HP = monster.HP - (damage) + Random.secure().nextInt(monster.DP);
+    if (monster.DP == 0) {
+      monster.HP = monster.HP - damage;
+    } else {
+      monster.HP = monster.HP - (damage) + Random.secure().nextInt(monster.DP);
+    }
   }
 
   void defend(int point) {
