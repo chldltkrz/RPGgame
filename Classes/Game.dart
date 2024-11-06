@@ -90,6 +90,8 @@ class Game {
   int battle(Monster monster) {
     // keeping track of turns
     int turn = 0;
+    // Keeping track of item usage
+    int itemUsed = 0;
     // loop until character HP is 0 or less
     // if character HP is 0 or less, it means the character is defeated
     // then return 0
@@ -97,16 +99,33 @@ class Game {
       // changing turns between character and monster
       if (turn % 2 == 0) {
         print('${character.name}의 턴');
-        print("행동을 선택하세요 (1. 공격 2. 방어)");
+        print("행동을 선택하세요 (1. 공격 2. 방어 3.아이템)");
         String? choice = stdin.readLineSync();
         if (choice == "1") {
           character.attackMonster(
               monster, Random.secure().nextInt(character.AP));
+          // ADVANCED FEATURE - using an item
+          // if item is used reset the AP
+          // note that if itemUsed is 1, it means the item has been used
+          // and 2 means the item has been used and AP has been reset
+          if (itemUsed == 1) {
+            character.AP ~/= 2;
+            itemUsed++;
+          }
           if (monster.HP <= 0) {
             return 1;
           }
         } else if (choice == "2") {
           character.defend(Random.secure().nextInt(character.DP));
+          // ADVANCED FEATURE - using an item
+        } else if (choice == "3") {
+          if (itemUsed == 0) {
+            character.AP *= 2;
+            itemUsed++;
+            print("아이템을 사용했습니다. 공격력이 2배가 됩니다. 현재 공격력: ${character.AP}");
+          } else {
+            print("아이템은 한 번만 사용할 수 있습니다.");
+          }
         } else {
           print("잘못된 입력입니다.");
         }
