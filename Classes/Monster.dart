@@ -13,6 +13,6 @@ class Monster {
   }
 
   void showStatus() {
-    print("${this.name} - 체력: ${this.HP}, 공격력 ${this.AP}");
+    print("${this.name} - 체력: ${this.HP}, 공격력 ${this.AP}, 방어력 ${this.DP}");
   }
 }

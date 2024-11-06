@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'Monster.dart';
 
 class Character {
@@ -9,7 +11,8 @@ class Character {
   Character(this.name, this.HP, this.AP, this.DP);
 
   void attackMonster(Monster monster, int damage) {
-    monster.HP -= damage;
+    // ADVANCED FEATURE - monster DP is subtracted from the damage
+    monster.HP = monster.HP - (damage) + Random.secure().nextInt(monster.DP);
   }
 
   void defend(int point) {

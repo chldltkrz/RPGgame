@@ -130,6 +130,11 @@ class Game {
           print("잘못된 입력입니다.");
         }
       } else {
+        // ADVANCED FEATURE - monster DP is subtracted from the damage
+        if (turn % 3 == 0 && turn > 0) {
+          monster.DP += 2;
+          print("${monster.name}의 방어력이 증가했습니다! 현재 방어력: ${monster.DP}");
+        }
         print('${monster.name}의 턴');
         monster.attackCharacter(character, Random.secure().nextInt(monster.AP));
         character.showStatus();
