@@ -21,20 +21,26 @@ class Game {
     character.showStatus();
     print("\n");
 
+    // loop until character HP is 0 or less
     while (character.HP > 0) {
+      // create a monster
       print("새로운 몬스터가 나타났습니다!");
       Monster m = getRandomMonster();
       m.showStatus();
       print("\n");
 
+      // run battle with the monster and save result to result int
       int result = battle(m);
 
+      // check if the result is 0, if so, print defeat message and break
       if (result == 0) {
         print("패배했습니다.");
         break;
+        // else print victory message and increment defeatedMonsters
       } else {
         print("${m.name} 을(를) 물리쳤습니다!\n");
         defeatedMonsters++;
+        // if all monsters have been defeated, print victory message and break
         if (defeatedMonsters == totalMonsters) {
           print("축하합니다! 모든 몬스터를 물리쳤습니다!");
           break;
@@ -55,6 +61,7 @@ class Game {
         }
       }
     }
+    // after all the battles, ask if the user wants to save the result
     print("결과를 저장하시겠습니까?(y/n)");
     while (true) {
       try {
@@ -81,8 +88,13 @@ class Game {
   }
 
   int battle(Monster monster) {
+    // keeping track of turns
     int turn = 0;
+    // loop until character HP is 0 or less
+    // if character HP is 0 or less, it means the character is defeated
+    // then return 0
     while (character.HP > 0) {
+      // changing turns between character and monster
       if (turn % 2 == 0) {
         print('${character.name}의 턴');
         print("행동을 선택하세요 (1. 공격 2. 방어)");

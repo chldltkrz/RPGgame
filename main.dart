@@ -45,6 +45,13 @@ Character loadCharacterStats() {
         break;
       }
     }
+    // ADVANCED FEATURE
+    // give extra 10 points of health to the character on 30% of chance
+    if (Random.secure().nextDouble() < 0.3) {
+      health += 10;
+      print("보너스 체력을 얻었습니다! 현재 체력: ${health}");
+    }
+
     // return character object
     return Character(name, health, attack, defense);
   } catch (e) {
