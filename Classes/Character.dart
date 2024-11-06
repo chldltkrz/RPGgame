@@ -8,18 +8,15 @@ class Character {
 
   Character(this.name, this.HP, this.AP, this.DP);
 
-  void attackMonster(Monster monster) {
-    monster.HP -= this.AP;
+  void attackMonster(Monster monster, int damage) {
+    monster.HP -= damage;
   }
 
-  void defend() {
-    this.DP += 10;
+  void defend(int point) {
+    this.HP += point;
   }
 
   showStatus() {
-    print("Name: ${this.name}");
-    print("HP: ${this.HP}");
-    print("AP: ${this.AP}");
-    print("DP: ${this.DP}");
+    print("${this.name} - 체력: ${this.HP} 공격력: ${this.AP} 방어력: ${this.DP}");
   }
 }

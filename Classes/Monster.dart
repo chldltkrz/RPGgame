@@ -8,14 +8,11 @@ class Monster {
 
   Monster(this.name, this.HP, this.AP);
 
-  attackCharacter(Character character) {
-    character.HP -= this.AP;
+  attackCharacter(Character character, int damage) {
+    character.HP -= damage;
   }
 
   void showStatus() {
-    print("Name: ${this.name}");
-    print("HP: ${this.HP}");
-    print("AP: ${this.AP}");
-    print("DP: ${this.DP}");
+    print("${this.name} - 체력: ${this.HP}, 공격력 ${this.AP}");
   }
 }
