@@ -15,14 +15,17 @@ class Game {
     this.defeatedMonsters = 0;
   }
   void startGame() {
+    // need to check if all monsters have been defeated
     int totalMonsters = monsters.length;
     print("게임을 시작합니다!");
     character.showStatus();
+    print("\n");
 
     while (character.HP > 0) {
       print("새로운 몬스터가 나타났습니다!");
       Monster m = getRandomMonster();
       m.showStatus();
+      print("\n");
 
       int result = battle(m);
 
@@ -30,33 +33,50 @@ class Game {
         print("패배했습니다.");
         break;
       } else {
-        print("${m.name} 을(를) 물리쳤습니다!");
+        print("${m.name} 을(를) 물리쳤습니다!\n");
         defeatedMonsters++;
         if (defeatedMonsters == totalMonsters) {
           print("축하합니다! 모든 몬스터를 물리쳤습니다!");
           break;
         } else {
-          print("다음 몬스터와 싸우시겠습니까?(y/n)");
-          String? next = stdin.readLineSync();
-          if (next == "n") {
-            print("게임을 종료합니다.");
-            break;
+          while (true) {
+            print("다음 몬스터와 싸우시겠습니까?(y/n)");
+            String? next = stdin.readLineSync();
+            if (next == "y") {
+              break;
+            } else if (next == "n") {
+              print("게임을 종료합니다.");
+              break;
+            } else {
+              print("잘못된 입력입니다.");
+              continue;
+            }
           }
         }
       }
     }
     print("결과를 저장하시겠습니까?(y/n)");
-    String? save = stdin.readLineSync();
-    if (save == "y") {
-      String gameResult = character.name +
-          "," +
-          character.HP.toString() +
-          "," +
-          (defeatedMonsters == totalMonsters ? "WIN" : "LOSE");
-      File file = File('Assets/result.txt');
-      file.writeAsStringSync("${gameResult}\n", mode: FileMode.append);
-    } else {
-      print("게임을 종료합니다.");
+    while (true) {
+      try {
+        String? save = stdin.readLineSync();
+        if (save == "y") {
+          String gameResult = character.name +
+              "," +
+              character.HP.toString() +
+              "," +
+              (defeatedMonsters == totalMonsters ? "WIN" : "LOSE");
+          File file = File('Assets/result.txt');
+          file.writeAsStringSync("${gameResult}\n", mode: FileMode.append);
+          break;
+        } else if (save == "n") {
+          print("게임을 종료합니다");
+          break;
+        } else {
+          throw FormatException("잘못된 입력입니다");
+        }
+      } catch (e) {
+        continue;
+      }
     }
   }
 
@@ -64,6 +84,7 @@ class Game {
     int turn = 0;
     while (character.HP > 0) {
       if (turn % 2 == 0) {
+        print('${character.name}의 턴');
         print("행동을 선택하세요 (1. 공격 2. 방어)");
         String? choice = stdin.readLineSync();
         if (choice == "1") {
@@ -78,11 +99,13 @@ class Game {
           print("잘못된 입력입니다.");
         }
       } else {
+        print('${monster.name}의 턴');
         monster.attackCharacter(character, Random.secure().nextInt(monster.AP));
         character.showStatus();
         monster.showStatus();
       }
       turn++;
+      print("\n");
     }
     return 0;
   }
