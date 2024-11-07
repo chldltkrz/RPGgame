@@ -146,8 +146,11 @@ class Game {
     return 0;
   }
 
+  // get a random monster from the list
   Monster getRandomMonster() {
+    // get a random index
     int randomMonsterIndex = Random.secure().nextInt(monsters.length);
+    // remove the monster from the list
     Monster m = monsters.elementAt(randomMonsterIndex);
     monsters.removeAt(randomMonsterIndex);
     return m;
